@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title></title>
+</head>
+<body>
+<h2 align="center">Enter Target Stock Ticker</h2>
+<form method="POST">
+    <p align="center"><input name="text"></textarea></p>
+    <p align="center"><button class=grey style="height:50px;width:150px">SUBMIT</button></a></p>
+</form> 
+{% for table in tables %}
+            {{titles[loop.index]}}
+            {{ table|safe }}
+{% endfor %}
+</body>
+</html>
