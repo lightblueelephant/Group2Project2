@@ -1,6 +1,6 @@
 # Stock Signal Predictor
 
-This program uses machine learning to try to predict the future movement of an individual stock. The program uses two years of historcal stock data to train a predictive model. The user inputs their stock ticker and the program outputs a prediction for the user to either buy if the stock is predicted to increase in price or to short it if it's predicted to decrease in price.
+This program uses machine learning to try to predict the future movement of an individual stock. The program uses two years of historcal stock data to train a predictive model. The user inputs their stock ticker and the program outputs a prediction for the user to either buy if the stock is predicted to increase in price or to sell or short it if the price is predicted to fall. The program uses a local web app called "Flask" for a clean and simple user experience.
 
 ---
 
@@ -8,7 +8,7 @@ This program uses machine learning to try to predict the future movement of an i
 
 This application is compatible with Python 3.9.
 
-The OS, Requests, JSON, Pandas, datetime, hvplot and FinTA libraries were used along with matplotlib and must be installed in order to run the program correctly. Stock data will be pulled from Alpaca so the user will need to install the Alpaca API. The Scikit-learn and imbalanced-learn libraries will have to be installed for machine learning.
+The OS, Requests, JSON, Pandas, datetime, hvplot and FinTA libraries were used along with matplotlib and must be installed in order to run the program correctly. Stock data will be pulled from Alpaca so the user will need to install the Alpaca API. The Scikit-learn and imbalanced-learn libraries will have to be installed for machine learning. Flask for Python must be installed in order to enable user input.
 
 OS provides a way to use operating system dependent functionality such as command line operations.
 
@@ -29,6 +29,8 @@ Matplotlib allows for the visualization of data in the form of plots and graphs.
 Scikit-learn implements machine learning and is a simple and efficient tool for predictive data analysis. Imbalanced-learn is used along with Scikit-learn to help process imbalanced datasets.
 
 The Alpaca API allows the program to access historical or real-time stock market data.
+
+Flask for Python allows the code to be run behind a clean and simple web app within a virtual environment.
 
 This program will work on Windows, MacOS and Linux with Python 3.9 installed. The program is a Jupyter Notebook and the user will need to run the program in a code editor such as Juypter Lab or Visual Studio Code.
 
@@ -56,6 +58,8 @@ Documentation for Scikit-Learn can be found [here.](https://scikit-learn.org/sta
 
 Documentation for Imbalanced-learn can be found [here.](https://imbalanced-learn.org/stable/user_guide.html)
 
+Documentation for Flask can be found [here.](https://flask.palletsprojects.com/en/2.2.x/)
+
 ---
 
 ## Installation Guide
@@ -74,6 +78,7 @@ pip install -U matplotlib
 pip install alpaca-py
 pip install -U scikit-learn
 pip install -U imbalanced-learn
+pip install Flask
 ```
 ---
 
@@ -81,13 +86,42 @@ pip install -U imbalanced-learn
 
 Clone or download the files from the Github repository.
 
-To run the program open your code editor and navigate to the folder containing the file "shared_notebook.ipynb".
+You must create a virtual enviroment in order to use Flask.
+Using your CLI, navigate to the directory containing the jupyter notebook file and type the following into your command prompt -
 
-In cell 4, input the stock ticker you want to use.
+For MacOS / Linux users -
+```
+mkdir stock_signal_predictor
+cd stock_signal_predictor
+python3 -m venv venv
+```
 
-Run the cells in sequence from top to bottom.
+For Windows users -
+```
+mkdir stock_signal_predictor
+cd stock_signal_predictor
+py -3 -m venv venv
+```
 
-The output displays a recommendation based on the prediciton for the user to either purchase or short the stock.
+The virtual environment will then have to be activated. To do this type the following into your command prompt -
+
+For MacOS / Linux users -
+```
+. venv/bin/activate
+```
+
+For Windows users -
+```
+venv\Scripts\activate
+```
+
+The final step is to load the Flask app and the notebook file associated with it. Type the following into your command prompt -
+```
+flask --app app run
+```
+
+The program will open in a web browser window with a prompt to enter a stock ticker of the users choice.
+Once the user enters their ticker symbol, they press the "Submit" button. The program then returns an output that displays a recommendation based on the prediciton for the user to either purchase or sell / short the stock.
 
 ---
 
