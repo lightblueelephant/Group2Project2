@@ -11,40 +11,26 @@ from termcolor import colored
 from finta import TA
 from pandas.tseries.offsets import DateOffset
 from sklearn.preprocessing import StandardScaler
-# from imblearn.over_sampling import RandomOverSampler
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 from sklearn.svm import SVC
 from sklearn.ensemble import AdaBoostClassifier
+import hashlib
+import streamlit as st
 
-
-
-app = Flask(__name__)
-
-
-@app.route('/')
-def my_form():
-    return render_template('index.html')
-
-@app.route('/', methods=['POST'])
-def my_form_post():
-    ticker = request.form['text']
-    ticker = ticker.upper()
-
-    alpaca_api_key = "PKT126TVACUEXXFT8Z85"
-    alpaca_secret_key = "WwlEmn0WUNYY0iJL7ltRQypkzqNfojvcnFtScBIy"
+def predict_stock(ticker, api_key, secret_key):
 
     alpaca = tradeapi.REST(
         alpaca_api_key,
         alpaca_secret_key,
         api_version="v2")
 
-    # end_date_1 = datetime.date.today() - datetime.timedelta(days=1)
-    # start_date_1 = end_date_1 - datetime.timedelta(days=720)
+        # end_date_1 = datetime.date.today() - datetime.timedelta(days=1)
+        # start_date_1 = end_date_1 - datetime.timedelta(days=720)
 
-    # end_date = end_date_1.isoformat()
-    # start_date = start_date_1.isoformat()
+        # end_date = end_date_1.isoformat()
+        # start_date = start_date_1.isoformat()
 
     start_date = pd.Timestamp("2019-10-01", tz="America/New_York").isoformat()
     end_date = pd.Timestamp("2022-10-20", tz="America/New_York").isoformat()
@@ -105,7 +91,7 @@ def my_form_post():
 
     cum_returns = {}
     for i in range(1,100):
-    
+
         training_begin = X.index.min()
         training_end = X.index.min() + DateOffset(weeks=i)
         
@@ -172,7 +158,31 @@ def my_form_post():
         result = "This stock is predicted to decrease in value. It's recommended to sell or short."
 
     return result
+################################################################################
+# Streamlit Code
 
 
-if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=8080, debug=True)
+# Create the application header using a markdown string
+st.markdown("Get A Buy/Sell Recommendation On A Stock")
+
+################################################################################
+# Step 2:
+# Add a Streamlit `text_area` component to accept data from the user.
+
+# @TODO:
+# Add a Streamlit `text_area` component to accept data from the user
+# Be sure to convert the input data to a string
+# Use the `encode` function to encode the input data
+ticker = str(st.text_area("Enter Stock Ticker"))
+alpaca_api_key = str(st.text_area("Enter Alpaca API Key"))
+alpaca_secret_key = str(st.text_area("Enter Alpaca API Secret Key"))
+
+# @TODO:
+# Use the Streamlit `write` function to display the length (`len) of the input
+# data back to the user
+
+if st.button("Make Recommendation"):
+    recommendation = predict_stock(ticker, alpaca_api_key, alpaca_secret_key)
+    st.write(recommendation)
+
+
